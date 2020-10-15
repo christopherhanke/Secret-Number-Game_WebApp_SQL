@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <h1>Welcome to the Secret Number Game!</h1>
+    <h3>What do you want to do?</h3>
+    <form method="POST" action="/">
+        <input type="text" name="user-name" placeholder="Enter your name"><br>
+        <input type="text" name="user-email" placeholder="Enter your Email"><br>
+        <button type="submit">Spielen</button>
+    </form>
+
+{% endblock content %}

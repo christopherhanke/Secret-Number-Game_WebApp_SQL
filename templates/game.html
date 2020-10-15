@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <h1>Secret Number Game</h1>
+    <p>
+        The task at hand is to guess a secret number between 1 and 30.
+    </p>
+
+    {% if no_int %}
+        <p style="color: red">
+            You didn't guess a valid number. Please guess a number between 1 and 30.
+        </p>
+    {% endif %}
+
+    {% if helpline %}
+        <p style="color: green">{{helpline}}</p>
+    {% endif %}
+
+    {% if helpline != "Hooray" %}
+        <form method="post" action="/game">
+            <input type="text" name="guess" placeholder="Enter a number">
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+    {% endif %}
+
+{% endblock%}
