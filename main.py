@@ -58,6 +58,7 @@ def game():
             helpline = "Hooray"
 
         return render_template("game.html", helpline=helpline)
+
     else:
         return render_template("game.html")
 
