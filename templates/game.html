@@ -2,27 +2,42 @@
 
 
 {% block content %}
-    <h1>Secret Number Game</h1>
-    <p>
-        The task at hand is to guess a secret number between 1 and 30.
-    </p>
+    <div class="container mt-2">
+        <h1>Secret Number Game</h1>
+    </div>
+    <div class="container">
+        <p>
+            The task at hand is to guess a secret number between 1 and 30.
+        </p>
+    </div>
 
     {% if no_int %}
-        <p style="color: red">
-            You didn't guess a valid number. Please guess a number between 1 and 30.
-        </p>
+        <div class="container">
+            <p class="text-danger">
+                You didn't guess a valid number. Please guess a number between 1 and 30.
+            </p>
+        </div>
     {% endif %}
 
     {% if helpline %}
-        <p style="color: green">{{helpline}}</p>
+        <div class="container">
+            {% if helpline != "Hooray" %}
+                <p class="text-light bg-danger p-3">{{helpline}}</p>
+            {% else %}
+                <p class="text-light bg-success p-3">{{helpline}}</p>
+            {% endif %}
+        </div>
     {% endif %}
 
     {% if helpline != "Hooray" %}
-        <form method="post" action="/game">
-            <input type="text" name="guess" placeholder="Enter a number">
-            <br>
-            <button type="submit">Submit</button>
-        </form>
+        <div class="container col">
+            <form method="post" action="/game">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="guess" placeholder="Enter a number"><br>
+                    <button type="submit" class="btn" style="background-color: palegreen">Submit</button>
+                </div>
+            </form>
+        </div>
     {% endif %}
 
 {% endblock%}

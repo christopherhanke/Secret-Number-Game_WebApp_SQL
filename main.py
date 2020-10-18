@@ -60,7 +60,14 @@ def game():
         return render_template("game.html", helpline=helpline)
 
     else:
-        return render_template("game.html")
+        return redirect(url_for("index"))
+
+
+# top score page
+# TODO
+@app.route("/topscore")
+def topscore():
+    return redirect(url_for("index"))
 
 
 # main routine to start the app
