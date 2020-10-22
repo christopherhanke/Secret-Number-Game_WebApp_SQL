@@ -12,7 +12,6 @@ app = Flask(__name__)
 db.create_all()
 
 
-
 # index page
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -55,10 +54,10 @@ def index():
 def game():
     if request.method == "POST":
         session_token = request.cookies.get("session_token")
-        if not session_token:
-            return redirect(url_for("index"))
+        user = db.query(User).filter_by(session_token=session_token).first()
 
-        user = db.query(User).filter_by(email=session_token).first()
+        if not user:
+            return redirect(url_for("index"))
 
         try:
             guess = int(request.form.get("guess"))
@@ -90,4 +89,4 @@ def topscore():
 
 # main routine to start the app
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
