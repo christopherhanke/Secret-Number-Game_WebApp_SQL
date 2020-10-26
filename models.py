@@ -12,4 +12,4 @@ class User(db.Model):
     password = db.Column(db.String, unique=False)
     solved = db.Column(db.String, unique=True)
     session_token = db.Column(db.String)
-
+    deleted = db.Column(db.Boolean, unique=False)
