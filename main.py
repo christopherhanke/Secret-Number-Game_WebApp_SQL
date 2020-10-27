@@ -29,7 +29,8 @@ def index():
                 email=email,
                 secret_number=random.randint(1, 30),
                 password=hashed_password,
-                solved=None
+                solved=None,
+                deleted=False
             )
             db.add(user)
             db.commit()
@@ -55,7 +56,7 @@ def index():
 def game():
     if request.method == "POST":
         session_token = request.cookies.get("session_token")
-        user = db.query(User).filter_by(session_token=session_token).first()
+        user = db.query(User).filter_by(session_token=session_token, deleted=False).first()
 
         if not user:
             return redirect(url_for("index"))
@@ -79,7 +80,7 @@ def game():
 
     else:
         session_token = request.cookies.get("session_token")
-        user = db.query(User).filter_by(session_token=session_token).first()
+        user = db.query(User).filter_by(session_token=session_token, deleted=False).first()
 
         if user:
             return render_template("game.html")
@@ -90,7 +91,7 @@ def game():
 @app.route("/profile", methods=["GET"])
 def profile():
     session_token = request.cookies.get("session_token")
-    user = db.query(User).filter_by(session_token=session_token).first()
+    user = db.query(User).filter_by(session_token=session_token, deleted=False).first()
 
     if user:
         return render_template("profile.html", user=user)
@@ -101,7 +102,7 @@ def profile():
 @app.route("/profile/edit", methods=["GET", "POST"])
 def profile_edit():
     session_token = request.cookies.get("session_token")
-    user = db.query(User).filter_by(session_token=session_token).first()
+    user = db.query(User).filter_by(session_token=session_token, deleted=False).first()
 
     if request.method == "GET":
         if user:
@@ -127,7 +128,7 @@ def profile_edit():
 @app.route("/profile/delete", methods=["GET", "POST"])
 def profile_delete():
     session_token = request.cookies.get("session_token")
-    user = db.query(User).filter_by(session_token=session_token).first()
+    user = db.query(User).filter_by(session_token=session_token, deleted=False).first()
 
     if request.method == "GET":
         if user:
@@ -138,7 +139,7 @@ def profile_delete():
         if not user:
             return redirect(url_for("index"))
 
-        db.delete(user)
+        user.deleted = True
         db.commit()
 
         return redirect(url_for("index"))
@@ -146,7 +147,7 @@ def profile_delete():
 
 @app.route("/users", methods=["GET"])
 def all_users():
-    users = db.query(User).all()
+    users = db.query(User).filter_by(deleted=False).all()
 
     return render_template("users.html", users=users)
 
