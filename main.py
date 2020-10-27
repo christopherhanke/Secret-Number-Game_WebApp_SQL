@@ -158,11 +158,13 @@ def user_details(user_id):
     return render_template("user_details.html", user=user)
 
 
-# top score page
-# TODO
-@app.route("/topscore")
-def topscore():
-    return redirect(url_for("index"))
+@app.route("/logout")
+def logout():
+    user = get_user_from_request()
+    response = make_response(render_template("welcome.html"))
+    response.set_cookie("session_token", expires=0)
+
+    return response
 
 
 def get_user_from_request():
