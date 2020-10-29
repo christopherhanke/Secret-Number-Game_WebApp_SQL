@@ -6,6 +6,9 @@
         <p class="card-text"><strong>Your email:</strong> {{ user.email }}</p>
     </div>
 
-    <p><a href="/profile/edit" class="btn btn-primary">Edit profile</a></p>
-    <p><a href="/profile/delete" class="btn btn-danger">Delete profile</a></p>
+    <p>
+        <a href="/profile/edit" class="btn btn-primary">Edit profile</a>
+        <a href="/profile/password" class="btn btn-primary">Change password</a>
+        <a href="/profile/delete" class="btn btn-danger">Delete profile</a>
+    </p>
 {% endblock %}

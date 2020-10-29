@@ -145,6 +145,35 @@ def profile_delete():
         return redirect(url_for("index"))
 
 
+@app.route("/profile/password", methods=["GET", "POST"])
+def profile_password():
+    user = get_user_from_request()
+
+    if request.method == "GET":
+        return render_template("profile_password.html")
+
+    elif request.method == "POST":
+        password = request.form.get("user-password")
+        hashed_password = hashlib.sha256(password.encode()).hexdigest()
+
+        if hashed_password != user.password:
+            return "Wrong password! Go back and try again."
+
+        else:
+            new_password = request.form.get("user-password-new")
+            new_password_2 = request.form.get("user-password-new2")
+
+            if new_password == new_password_2:
+                hashed_password_new = hashlib.sha256(new_password.encode()).hexdigest()
+                user.password = hashed_password_new
+                db.commit()
+
+                return redirect(url_for("profile"))
+
+            else:
+                return redirect(url_for("profile_password"))
+
+
 @app.route("/users", methods=["GET"])
 def all_users():
     users = db.query(User).filter_by(deleted=False).all()
