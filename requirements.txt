@@ -3,3 +3,4 @@ gunicorn
 sqla-wrapper
 psycopg2
 werkzeug
+pytest
